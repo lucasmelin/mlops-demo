@@ -3,15 +3,19 @@ on: [push]
 jobs:
   run:
     runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml-py3:latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
     steps:
       - uses: actions/checkout@v2
+
       - uses: iterative/setup-cml@v1
 
-      - name: Set up Python 3.9
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: ${{ matrix.python-version }}
 
       # Install and configure poetry
       - name: Install Poetry
