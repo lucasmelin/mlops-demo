@@ -43,13 +43,12 @@ jobs:
         run: poetry install --no-interaction
 
       - name: Train and Evaluate model
-        shell: bash
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
           AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
         run: |
-          poetry shell
+          source .venv/bin/activate
 
           # Pull data & run-cache from Azure Blob Storage and reproduce pipeline
           dvc pull --run-cache
