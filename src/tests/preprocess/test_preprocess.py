@@ -1,30 +1,24 @@
 # PyTest file for all preprocessing of data
 
-import io
-import builtins
 import pytest
 import pandas as pd
 import sys
-import os
+from pathlib import Path
 
 # Parent Folder
 sys.path.append(
-    os.path.dirname(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+    str(Path(__file__).resolve().parents[2])
 )
 
 # Preprocess Python file
 import preprocess_data
 
 FILE_NAME = "testWeatherAUS"
-DATA_PATH = (
-    os.path.dirname(os.path.realpath(__file__)) + "/test_data/" + FILE_NAME + ".csv"
+DATA_DIR = Path(__file__).parent / "test_data"
+DATA_PATH = str(
+    DATA_DIR / f"{FILE_NAME}.csv"
 )
-PROCESSED_DATA_PATH = (
-    os.path.dirname(os.path.realpath(__file__))
-    + "/test_data/"
-    + FILE_NAME
-    + "_processed.csv"
-)
+PROCESSED_DATA_PATH = DATA_DIR / f"{FILE_NAME}_processed.csv"
 
 
 def test_count_nulls_by_line():
@@ -65,6 +59,6 @@ def cleanup(request):
     # Runs tests then cleans up the processed file
     yield
     try:
-        os.remove(PROCESSED_DATA_PATH)
+        PROCESSED_DATA_PATH.unlink()
     except:
         pass

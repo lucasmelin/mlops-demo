@@ -59,4 +59,4 @@ def preprocess_data(DATA_PATH):
 if __name__ == "__main__":
     DATA_PATH = Path(__file__).parent.parent / "data" / "weatherAUS.csv"
     preprocess_data(str(DATA_PATH.resolve()))
-    print("Saved to {}".format(str(DATA_PATH.resolve())[:-4] + "_processed.csv"))
+    print(f"Saved to {str(DATA_PATH.resolve())[:-4]}_processed.csv")
